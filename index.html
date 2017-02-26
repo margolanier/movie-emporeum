@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+    <title>Movie Emporeum</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body ng-app="MovieApp">
+	<header>
+		<h1>Movie Emporeum <img src="popcorn.png"></h1>
+	</header>
+	
+	<section ng-controller="TopMoviesController" id="top-rated">
+		<div id="top-rated-header">
+			<h2>My Top-Rated</h2>
+			<p ng-show="topMovies.length === 0">No current movies with a high rating.</p>
+		</div>
+		
+		<ul>
+			<li ng-repeat="movie in topMovies">
+				<div class="info">
+					<p><span class="title">{{ movie.title }}</span></p>
+				</div>
+				<div class="rating">
+					<button class="star" ng-repeat="i in [1, 2, 3, 4, 5]">
+						<i class="fa fa-star-o" ng-hide="$index < movie.rating"></i>
+						<i class="fa fa-star" ng-show="$index < movie.rating"></i>
+					</button>
+				</div>
+			</li>
+		</ul>
+	</section>
+	
+	<section ng-controller="ShowMoviesController">
+		<div id="explore-header">
+			<h2>Explore Movies</h2>
+		</div>
+		
+		<ul>
+			<li ng-repeat="movie in movies">
+				<div class="info">
+					<img ng-src="{{ movie.image }}">
+					<p><span class="title">{{ movie.title }},</span> <span class="date">{{ movie.releaseDate }}</span></p>
+					<p class="genre">
+						<span ng-repeat="id in movie.genreIds">{{ genres[id] }}</span>
+					</p>
+					<p>{{ movie.desc }}</p>
+				</div>
+				<div class="rating">
+					<button class="star" ng-repeat="i in [1, 2, 3, 4, 5]" ng-click="rate(movie, $index + 1)">
+						<i class="fa fa-star-o" ng-hide="$index < movie.rating"></i>
+						<i class="fa fa-star" ng-show="$index < movie.rating"></i>
+					</button>
+					<button class="trash" ng-click="remove($index)"><i class="fa fa-trash-o"></i></button>
+				</div>
+			</li>
+		</ul>
+	</section>
+</body>
+
+</html>
